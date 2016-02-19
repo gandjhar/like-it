@@ -15,18 +15,24 @@
 //= require_tree .
 
 
-// Server successfully created a "like".  Response with latest like count.
+// Server successfully created a "like".  Response has latest like count.
 function onLikeCreated( response ) {
    console.log( "response: " + JSON.stringify( response ) );
 
+   // Update the like count display for this post.
    $( "#post-likes-" + response.post_id ).html( response.likes );
 }
 
 // Ajax call to server requesting to create a "like".
-function createLike( url, post_id, user_id ) {
+// Note that post_id is in the url.
+function createLike( url, user_id ) {
+   url_json = url + ".json?user_id=" + user_id
+
+   console.log( "create " + url_json );
+
    $.ajax({
          method: "POST",
-         url: url + ".json?user_id=" + user_id
+         url: url_json
       })
       .done( onLikeCreated );
 }
@@ -35,16 +41,10 @@ function createLike( url, post_id, user_id ) {
 function onLike( elem, event ) {
    event.preventDefault();
 
-   var href = $(elem).attr("href");
-
-   console.log( "like " + href );
-
-   var post_id = $(elem).attr("data-post-id");
+   var href    = $(elem).attr("href");
    var user_id = $(elem).attr("data-user-id");
 
-   console.log( "post id: " + post_id + ", user_id:" + user_id );
-
-   createLike( href, post_id, user_id );
+   createLike( href, user_id );
 }
 
 function initialize() {
