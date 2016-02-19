@@ -5,7 +5,13 @@ class LikesController < ApplicationController
 
       @like.save
 
-      redirect_to posts_path
+      post = @like.post
+
+      respond_to do |format|
+         format.html { redirect_to posts_path }
+         format.json { render json: { post_id: post.id, likes: post.likes.count } }
+      end
+
    end
 
 end
