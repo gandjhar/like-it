@@ -1,8 +1,8 @@
 Post.destroy_all
 User.destroy_all
 
-frank = User.create( email: 'frank@ex.com', password: 'f', password_confirmation: 'f' )
-alice = User.create( email: 'alice@ex.com', password: 'a', password_confirmation: 'a' )
+frank = User.create( email: 'frank@ex.com', password: 'foobarza', password_confirmation: 'foobarza' )
+alice = User.create( email: 'alice@ex.com', password: 'foobarza', password_confirmation: 'foobarza' )
 
 Post.create( body: "Pizza is yummy!"  , user: frank )
 Post.create( body: "I like Star Wars.", user: frank )
