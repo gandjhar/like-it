@@ -23,6 +23,18 @@ function onLikeCreated( response ) {
    $( "#post-likes-" + response.post_id ).html( response.likes );
 }
 
+// Server failed to a "like".  Display an error message.
+function onLikeCreateFail( xhr ) {
+   var response = xhr.responseJSON;
+
+   console.log( JSON.stringify( response ) );
+
+   var error_message = $("<span/>").html( "Errors: " + JSON.stringify( response.errors ) );
+
+   // Insert error message after the like count for the post.
+   error_message.insertAfter( $("#post-likes-" + response.post_id) );
+}
+
 // Ajax call to server requesting to create a "like".
 // Note that post_id is in the url.
 function createLike( url, user_id ) {
@@ -34,7 +46,8 @@ function createLike( url, user_id ) {
          method: "POST",
          url: url_json
       })
-      .done( onLikeCreated );
+      .done( onLikeCreated )
+      .fail( onLikeCreateFail );
 }
 
 // Called when user likes a post.
